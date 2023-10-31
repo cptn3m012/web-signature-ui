@@ -1,7 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [message, setMessage] = useState('');
+    const [style, setStyle] = useState('');
+    const navigate = useNavigate();
+    
     const handleLogin = async (event) => {
         event.preventDefault();
         const form = event.target;
@@ -20,16 +24,22 @@ const Login = () => {
             });
 
             const result = await response.json();
+            setStyle('text-red-500 my-2 text-center');
             setMessage(result.message);
 
 
             if (response.ok) {
                 form.reset();
                 localStorage.setItem('token', result.token);
-                window.location.reload(false);
+                setStyle('text-lime-500 my-2 text-center');
                 setMessage("Pomyślnie zalogowano");
+                setTimeout(() => {
+                    navigate('/');
+                    window.location.reload(false);
+                }, 1000); // 1000 milisekund = 1 sekund
             }
         } catch (error) {
+            setStyle('text-red-500 my-2 text-center');
             setMessage('Wystąpił błąd: ' + error.message);
         }
     };
@@ -93,7 +103,7 @@ const Login = () => {
                         </a>
                     </div>
                     {message && (
-                        <div className="text-red-500 my-2 text-center">
+                        <div className={style}>
                             <p>{message}</p>
                         </div>
                     )}

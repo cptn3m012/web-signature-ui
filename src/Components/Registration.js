@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [message, setMessage] = useState(''); //
+    const [message, setMessage] = useState('');
+    const [style, setStyle] = useState('');
+    const navigate = useNavigate();
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -22,6 +25,7 @@ const Registration = () => {
         };
 
         if (formData.password !== formData.repeatPassword) {
+            setStyle('text-red-500 my-2 text-center');
             setMessage('Hasła nie zgadzają się.');
             return;
         }
@@ -35,13 +39,19 @@ const Registration = () => {
                 body: JSON.stringify(formData),
             });
             const result = await response.json();
+            setStyle('text-red-500 my-2 text-center');
             setMessage(result.message);
 
             if (response.ok) {
                 form.reset();
+                setStyle('text-lime-500 my-2 text-center');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1000); // 1000 milisekund = 1 sekund
             }
 
         } catch (error) {
+            setStyle('text-red-500 my-2 text-center');
             setMessage('Wystąpił błąd: ' + error.message);
         }
 
@@ -108,7 +118,7 @@ const Registration = () => {
                         Posiadasz konto? <a href="/Login" className="text-blue-700 hover:underline dark:text-blue-500">Przejdź do logowania.</a>
                     </div>
                     {message && (
-                        <div className="text-red-500 my-2 text-center">
+                        <div className={style}>
                             <p>{message}</p>
                         </div>
                     )}

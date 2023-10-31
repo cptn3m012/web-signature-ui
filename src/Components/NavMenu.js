@@ -40,6 +40,7 @@ export class NavMenu extends Component {
 
     handleLogout = () => {
         localStorage.removeItem('token');
+        window.location.reload(false);
         this.setState({
             isLoggedIn: false,
             firstName: '',
