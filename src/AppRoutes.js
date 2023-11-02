@@ -1,6 +1,7 @@
 import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Registration from "./Components/Registration";
+import Edit from "./Components/Edit";
 
 const AppRoutes = [
     {
@@ -14,6 +15,10 @@ const AppRoutes = [
     {
         path: '/registration',
         element: <Registration />
+    },
+    {
+        path: '/edit',
+        element: <Edit />
     }
 ];
 

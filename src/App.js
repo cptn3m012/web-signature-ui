@@ -12,12 +12,17 @@ function App() {
         {AppRoutes.map((route, index) => {
           const { path, element } = route;
 
-          // Jeśli użytkownik jest zalogowany i próbuje uzyskać dostęp do '/login' lub '/registration', przekieruj go na stronę główną
+          //Jeśli użytkownik jest zalogowany i próbuje uzyskać dostęp do '/login' lub '/registration', przekieruj go na stronę główną
           if ((path === '/login' || path === '/registration') && isAuthenticated) {
             return <Route key={index} path={path} element={<Navigate to="/" />} />;
           }
 
-          // Dla innych tras, utwórz standardowy Route
+          //Jeśli użytkownik nie jest zalogowany i próbuje uzyskać dostęp do '/edit', przekieruj go na stronę główną
+          if (path === '/edit' && !isAuthenticated) {
+            return <Route key={index} path={path} element={<Navigate to="/" />} />;
+          }
+
+          //Dla innych tras, utwórz standardowy Route
           return <Route key={index} path={path} element={element} />;
         })}
         </Routes>
