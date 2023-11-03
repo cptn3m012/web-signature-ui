@@ -1,9 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Edit = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
     const [style, setStyle] = useState('');
+    const [userData, setUserData] = useState(false);
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const decodedToken = JSON.parse(atob(base64));
+            const decodedUserId = decodeURIComponent(escape(decodedToken.UserId));
+            const decodedFirstName = decodeURIComponent(escape(decodedToken.FirstName));
+            const decodedLastName = decodeURIComponent(escape(decodedToken.LastName));
+            const decodedPassword = decodeURIComponent(escape(decodedToken.Password));
+
+            // Zapisujemy wszystkie potrzebne dane użytkownika w stanie komponentu
+            setUserData({
+                isLoggedIn: true,
+                userId: decodedUserId,
+                firstName: decodedFirstName,
+                lastName: decodedLastName,
+                password: decodedPassword,
+            });
+        }
+    }, []); // Używamy pustej tablicy zależności, aby useEffect wykonał się tylko raz po pierwszym renderowaniu komponentu
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -15,20 +38,30 @@ const Edit = () => {
         const data = new FormData(form);
 
         const formData = {
+            id: userData.userId, 
             first_name: data.get('first_name'),
             last_name: data.get('last_name'),
-            password: data.get('password'),
-            repeatPassword: data.get('repeat-password'),
+            old_password: data.get('old_password'),
+            new_password: data.get('new_password'),
+            repeatNewPassword: data.get('repeat-new_password'),
         };
 
-        if (formData.password !== formData.repeatPassword) {
+        if (formData.new_password !== formData.repeatNewPassword) {
             setStyle('text-red-500 my-2 text-center');
             setMessage('Hasła nie zgadzają się.');
             return;
+        } 
+        else if (formData.old_password === formData.new_password || formData.old_password === formData.repeatNewPassword)
+        {
+            setStyle('text-red-500 my-2 text-center');
+            setMessage('Nowe hasło nie może być takie same jak stare.');
+            return;
         }
 
+        debugger;
+
         try {
-            const response = await fetch('https://localhost:44360/api/Auth/Register', {
+            const response = await fetch('https://localhost:44360/api/Auth/Edit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +74,12 @@ const Edit = () => {
 
             if (response.ok) {
                 form.reset();
+                localStorage.setItem('token', result.token);
                 setStyle('text-lime-500 my-2 text-center');
+                setMessage("Pomyślnie zalogowano");
+                setTimeout(() => {
+                    window.location.reload(false);
+                }, 1000); // 1000 milisekund = 1 sekund
             }
 
         } catch (error) {
@@ -60,41 +98,41 @@ const Edit = () => {
                     <div className="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imię</label>
-                            <input type="first_name" name="first_name" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Grzesiek" required/>
+                            <input type="first_name" name="first_name" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder={userData.firstName} defaultValue={userData.firstName} required/>
                         </div>
                         <div>
                             <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nazwisko</label>
-                            <input type="last_name" name="last_name" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Floryda" required/>
+                            <input type="last_name" name="last_name" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder={userData.lastName} defaultValue={userData.lastName} required/>
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stare hasło</label>
+                        <label htmlFor="old_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stare hasło</label>
                         <input
                             type={showPassword ? "text" : "password"}
-                            name="password"
-                            id="password"
+                            name="old_password"
+                            id="old_password"
                             placeholder="••••••••"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nowe hasło</label>
+                        <label htmlFor="new_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nowe hasło</label>
                         <input
                             type={showPassword ? "text" : "password"}
-                            name="password"
-                            id="password"
+                            name="new_password"
+                            id="new_password"
                             placeholder="••••••••"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             required
                         />
                     </div>
                     <div>
-                        <label htmlFor="repeat-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Powtórz hasło</label>
+                        <label htmlFor="repeat-new_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Powtórz hasło</label>
                         <input
                             type={showPassword ? "text" : "password"}
-                            name="repeat-password"
-                            id="repeat-password"
+                            name="repeat-new_password"
+                            id="repeat-new_password"
                             placeholder="••••••••"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             required
