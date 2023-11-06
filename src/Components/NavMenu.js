@@ -1,108 +1,128 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link, NavLink as RRNavLink } from 'react-router-dom';
 import './NavMenu.css';
 import DarkModeToggle from './DarkModeToggle';
+import axios from 'axios';
+import ConnectionUrl from "../ConnectionUrl";
+import {errorNotify, successNotifyStorage} from "../ToastNotifications";
 
-export class NavMenu extends Component {
-    static displayName = NavMenu.name;
+const NavMenu = () => {
+    const [collapsed, setCollapsed] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    constructor(props) {
-        super(props);
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true,
-            isLoggedIn: false,
-            firstName: '',
-        };
-    }
+    useEffect(() => {
+        const successNotificationContent = localStorage.getItem('successNotification');
+        const errorNotificationContent = localStorage.getItem('errorNotification');
+        if (successNotificationContent) {
+            successNotifyStorage();
+            localStorage.removeItem('successNotification');
+        }
+        if (errorNotificationContent) {
+            errorNotify();
+            localStorage.removeItem('errorNotification');
+        }
+    }, []);
 
-    componentDidMount() {
+
+    useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const decodedToken = JSON.parse(atob(base64));
-            const decodedFirstName = decodeURIComponent(escape(decodedToken.FirstName));
-            this.setState({
-                isLoggedIn: true,
-                firstName: decodedFirstName,
-            });
+            axios.post(ConnectionUrl.connectionUrlString + 'api/Auth/VerifyToken', {
+                Token: token
+            })
+                .then(response => {
+                    setIsLoggedIn(true);
+                })
+                .catch(error => {
+                    localStorage.setItem('errorNotification', 'Nastąpiło wylogowanie!');
+                    localStorage.removeItem('token');
+                    setIsLoggedIn(false);
+                    window.location.reload(true);
+                });
         }
-    }
+    }, []);
 
-    toggleNavbar() {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    }
-
-    handleLogout = () => {
-        localStorage.removeItem('token');
-        window.location.reload(false);
-        this.setState({
-            isLoggedIn: false,
-            firstName: '',
-        });
+    const toggleNavbar = () => {
+        setCollapsed(!collapsed);
     };
 
-    render() {
-        const { isLoggedIn, firstName } = this.state;
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.setItem('errorNotification', 'Nastąpiło wylogowanie!');
+        setIsLoggedIn(false);
+        window.location.reload(true);
+    };
 
-        return (
-            <header>
-                <Navbar
-                    className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 dark:bg-gray-800"
-                    container
-                    light
-                >
-                    <div className="navbar-brand dark:text-white" tag={Link} to="/">
-                        <NavbarBrand className="dark:text-white" tag={Link} to="/">
-                            WebSignature
-                        </NavbarBrand>
-                        <DarkModeToggle />
-                    </div>
-                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                    <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-                        <ul className="navbar-nav flex-grow justify-content-end dark:">
-                            <NavItem>
-                                <NavLink tag={RRNavLink} className="dark:text-white" exact to="/" activeClassName="active">
-                                    Home
-                                </NavLink>
-                            </NavItem>
-                            {isLoggedIn ? (
-                                <React.Fragment>
-                                    <NavItem>
-                                        <span className="nav-link dark:text-white">Witaj, {firstName}</span>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            tag={RRNavLink}
-                                            className="dark:text-white"
-                                            to="#"
-                                            onClick={this.handleLogout}
-                                        >
-                                            Wyloguj
-                                        </NavLink>
-                                    </NavItem>
-                                </React.Fragment>
-                            ) : (
+    return (
+        <header>
+            <Navbar
+                className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 dark:bg-gray-800"
+                container
+                light
+            >
+                <div className="navbar-brand dark:text-white" tag={Link} to="/">
+                    <NavbarBrand className="dark:text-white" tag={Link} to="/">
+                        WebSignature
+                    </NavbarBrand>
+                    <DarkModeToggle />
+                </div>
+                <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+                <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
+                    <ul className="navbar-nav flex-grow justify-content-end dark:">
+                        <NavItem>
+                            <NavLink tag={RRNavLink} className="dark:text-white" exact to="/">
+                                Home
+                            </NavLink>
+                        </NavItem>
+                        {isLoggedIn ? (
+                            <React.Fragment>
                                 <NavItem>
                                     <NavLink
                                         tag={RRNavLink}
                                         className="dark:text-white"
-                                        to="/login"
-                                        activeClassName="active"
+                                        to="/Edit"
                                     >
-                                        Zaloguj się
+                                        Moje dane
                                     </NavLink>
                                 </NavItem>
-                            )}
-                        </ul>
-                    </Collapse>
-                </Navbar>
-            </header>
-        );
-    }
-}
+                                <NavItem>
+                                    <NavLink
+                                        tag={RRNavLink}
+                                        className="dark:text-white"
+                                        to="/ChangePassword"
+                                    >
+                                        Zmiana hasła
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        tag={RRNavLink}
+                                        className="dark:text-white"
+                                        to="#"
+                                        onClick={handleLogout}
+                                    >
+                                        Wyloguj
+                                    </NavLink>
+                                </NavItem>
+                            </React.Fragment>
+                        ) : (
+                            <NavItem>
+                                <NavLink
+                                    tag={RRNavLink}
+                                    className="dark:text-white"
+                                    to="/login"
+                                >
+                                    Zaloguj się
+                                </NavLink>
+                            </NavItem>
+                        )}
+                    </ul>
+                </Collapse>
+            </Navbar>
+        </header>
+    );
+};
+
+export default NavMenu;

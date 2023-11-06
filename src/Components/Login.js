@@ -1,47 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConnectionUrl from "../ConnectionUrl";
+import axios from "axios";
 
 const Login = () => {
     const [message, setMessage] = useState('');
-    const [style, setStyle] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    
-    const handleLogin = async (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch(ConnectionUrl.connectionUrlString + 'api/Auth/Login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.get('email'),
-                    password: formData.get('password'),
-                }),
-            });
-
-            const result = await response.json();
-            setStyle('text-red-500 my-2 text-center');
-            setMessage(result.message);
-
-
-            if (response.ok) {
-                form.reset();
-                localStorage.setItem('token', result.token);
-                setStyle('text-lime-500 my-2 text-center');
-                setMessage("Pomyślnie zalogowano");
-                setTimeout(() => {
-                    navigate('/');
-                    window.location.reload(false);
-                }, 1000); // 1000 milisekund = 1 sekund
-            }
+            const response = await axios.post(ConnectionUrl.connectionUrlString + 'api/Auth/Login', { email, password });
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('successNotification', 'Poprawnie zalogowano!');
+            window.location.reload(true);
+            navigate('/');
         } catch (error) {
-            setStyle('text-red-500 my-2 text-center');
-            setMessage('Wystąpił błąd: ' + error.message);
+            if (error.response) {
+                let serverError = error.response.data;
+                if (serverError.error && serverError.message) {
+                    setMessage(serverError.message);
+                } else {
+                    setMessage('Nieznany błąd serwera.');
+                }
+            } else if (error.request) {
+                setMessage('Nie otrzymano odpowiedzi. Sprawdź połączenie internetowe.');
+            } else {
+                setMessage(error.message);
+            }
         }
     };
 
@@ -54,6 +42,8 @@ const Login = () => {
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             name="email"
                             id="email"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -65,6 +55,8 @@ const Login = () => {
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasło</label>
                         <input
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             name="password"
                             id="password"
                             placeholder="••••••••"
@@ -104,7 +96,7 @@ const Login = () => {
                         </a>
                     </div>
                     {message && (
-                        <div className={style}>
+                        <div className="text-red-500 my-2 text-center">
                             <p>{message}</p>
                         </div>
                     )}
