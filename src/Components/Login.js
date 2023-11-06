@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ConnectionUrl from "../ConnectionUrl";
 
 const Login = () => {
     const [message, setMessage] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
         const formData = new FormData(form);
 
         try {
-            const response = await fetch('https://localhost:44360/api/Auth/Login', {
+            const response = await fetch(ConnectionUrl.connectionUrlString + 'api/Auth/Login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ConnectionUrl from "../ConnectionUrl";
 
 const Registration = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +32,7 @@ const Registration = () => {
         }
 
         try {
-            const response = await fetch('https://localhost:44360/api/Auth/Register', {
+            const response = await fetch(ConnectionUrl.connectionUrlString +'api/Auth/Register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

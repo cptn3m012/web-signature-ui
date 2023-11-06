@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ConnectionUrl from "../ConnectionUrl";
 
 const Edit = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +62,7 @@ const Edit = () => {
         debugger;
 
         try {
-            const response = await fetch('https://localhost:44360/api/Auth/Edit', {
+            const response = await fetch(ConnectionUrl.connectionUrlString + 'api/Auth/Edit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
