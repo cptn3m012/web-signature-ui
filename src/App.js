@@ -34,7 +34,7 @@ function App() {
                     }
 
                     //Jeśli użytkownik nie jest zalogowany i próbuje uzyskać dostęp do '/edit', przekieruj go na stronę główną
-                    if (path === '/edit' && !isAuthenticated) {
+                    if ((path === '/edit' || path === '/signature') && !isAuthenticated) {
                         return <Route key={index} path={path} element={<Navigate to="/" />} />;
                     }
 

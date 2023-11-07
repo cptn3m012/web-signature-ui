@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 
 export const successNotifyStorage = () => {
-    const content = localStorage.getItem('successNotification');
+    const content = localStorage.getItem('successNotifyStorage');
     if (content) {
         toast.success(content, {
             position: "top-center",

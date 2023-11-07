@@ -3,10 +3,11 @@ import Login from "./Components/Login";
 import Registration from "./Components/Registration";
 import Edit from "./Components/Edit";
 import ChangePassword from "./Components/ChangePassword";
+import Signature from "./Components/Signature";
 
 const AppRoutes = [
     {
-        index: true,
+        path: '/',
         element: <Home />
     },
     {
@@ -24,6 +25,10 @@ const AppRoutes = [
     {
         path: '/changePassword',
         element: <ChangePassword />
+    },
+    {
+        path: '/signature',
+        element: <Signature />
     }
 ];
 

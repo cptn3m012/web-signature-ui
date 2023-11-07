@@ -13,11 +13,11 @@ const NavMenu = () => {
 
 
     useEffect(() => {
-        const successNotificationContent = localStorage.getItem('successNotification');
+        const successNotificationContent = localStorage.getItem('successNotifyStorage');
         const errorNotificationContent = localStorage.getItem('errorNotification');
         if (successNotificationContent) {
             successNotifyStorage();
-            localStorage.removeItem('successNotification');
+            localStorage.removeItem('successNotifyStorage');
         }
         if (errorNotificationContent) {
             errorNotify();
