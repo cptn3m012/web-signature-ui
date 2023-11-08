@@ -3,7 +3,10 @@ import Login from "./Components/Login";
 import Registration from "./Components/Registration";
 import Edit from "./Components/Edit";
 import ChangePassword from "./Components/ChangePassword";
-import Signature from "./Components/Signature";
+import KeyGeneration from "./Components/KeyGeneration";
+import DataEncryption from "./Components/DataEncryption";
+import CreatingSignature from "./Components/CreatingSignature";
+import SignatureVerification from "./Components/SignatureVerification";
 
 const AppRoutes = [
     {
@@ -27,8 +30,20 @@ const AppRoutes = [
         element: <ChangePassword />
     },
     {
-        path: '/signature',
-        element: <Signature />
+        path: '/KeyGeneration',
+        element: <KeyGeneration />
+    },
+    {
+        path: '/DataEncryption',
+        element: <DataEncryption />
+    },
+    {
+        path: '/CreatingSignature',
+        element: <CreatingSignature />
+    },
+    {
+        path: '/SignatureVerification',
+        element: <SignatureVerification />
     }
 ];
 

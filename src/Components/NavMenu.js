@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link, NavLink as RRNavLink } from 'react-router-dom';
 import './NavMenu.css';
 import DarkModeToggle from './DarkModeToggle';
@@ -58,7 +58,7 @@ const NavMenu = () => {
     return (
         <header>
             <Navbar
-                className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 dark:bg-gray-800"
+                className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow dark:bg-gray-800"
                 container
                 light
             >
@@ -78,6 +78,33 @@ const NavMenu = () => {
                         </NavItem>
                         {isLoggedIn ? (
                             <React.Fragment>
+                                <UncontrolledDropdown nav inNavbar>
+                                    <DropdownToggle nav caret>
+                                        Funkcje
+                                    </DropdownToggle>
+                                    <DropdownMenu right>
+                                        <DropdownItem>
+                                            <Link to="/KeyGeneration">
+                                                Generowanie kluczy
+                                            </Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link to="/DataEncryption">
+                                                Szyfrowanie danych
+                                            </Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link to="/CreatingSignature">
+                                                Tworzenie podpisu
+                                            </Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link to="/SignatureVerification">
+                                                Weryfikacja podpisu
+                                            </Link>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
                                 <NavItem>
                                     <NavLink
                                         tag={RRNavLink}
