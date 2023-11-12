@@ -14,7 +14,7 @@ const Login = () => {
         try {
             const response = await axios.post(ConnectionUrl.connectionUrlString + 'api/Auth/Login', { email, password });
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('successNotification', 'Poprawnie zalogowano!');
+            localStorage.setItem('successNotifyStorage', 'Poprawnie zalogowano!');
             window.location.reload(true);
             navigate('/');
         } catch (error) {
@@ -34,8 +34,8 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center dark:bg-gray-800 mt-20">
-            <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex items-center justify-center dark:bg-transparent mt-20">
+            <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8  bg-gray-200 dark:bg-gray-700 dark:border-gray-700">
                 <form className="space-y-6" onSubmit={handleLogin}>
                     <h5 className="flex items-center justify-center text-xl font-medium text-gray-900 dark:text-white">Logowanie</h5>
                     <div>
@@ -72,7 +72,6 @@ const Login = () => {
                                     type="checkbox"
                                     value=""
                                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                                    required
                                 />
                             </div>
                             <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">

@@ -31,11 +31,10 @@ export const successNotify = (content) => {
     }
 }
 
-export const errorNotify = () => {
-    const content = localStorage.getItem('errorNotification');
-    if (content && !toast.isActive('errorNotify')) {
+export const errorNotifyStorage = () => {
+    const content = localStorage.getItem('errorNotifyStorage');
+    if (content) {
         toast.error(content, {
-            toastId: 'logout',
             position: "top-center",
             autoClose: 7000,
             hideProgressBar: false,
@@ -44,7 +43,21 @@ export const errorNotify = () => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-            className: "errorToast",
+        });
+    }
+}
+
+export const errorNotify = (content) => {
+    if (content) {
+        toast.error(content, {
+            position: "top-center",
+            autoClose: 7000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
         });
     }
 }

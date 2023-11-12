@@ -1,5 +1,5 @@
 class ConnectionUrl {
-    static connectionUrlString = 'https://localhost:44360/';
+    static connectionUrlString = 'http://localhost:5244/';
 }
 
 export default ConnectionUrl;

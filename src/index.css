@@ -16,6 +16,6 @@ code {
     monospace;
 }
 
-.dark{
-  background-color: rgb(31 41 55);
+.dark .background-color{
+    background: linear-gradient(to bottom, #1a1b27, #0c4a6e, #1a1b27);
 }
