@@ -33,9 +33,8 @@ export const successNotify = (content) => {
 
 export const errorNotifyStorage = () => {
     const content = localStorage.getItem('errorNotifyStorage');
-    if (content && !toast.isActive('errorNotifyStorage')) {
+    if (content) {
         toast.error(content, {
-            toastId: 'logout',
             position: "top-center",
             autoClose: 7000,
             hideProgressBar: false,
@@ -44,7 +43,6 @@ export const errorNotifyStorage = () => {
             draggable: true,
             progress: undefined,
             theme: "colored",
-            className: "errorToast",
         });
     }
 }

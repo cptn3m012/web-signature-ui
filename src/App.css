@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 .Toast{
-  margin-top: 50px;
+  margin-top: 85px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

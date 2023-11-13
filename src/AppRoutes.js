@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Registration from "./Components/Registration";
@@ -44,6 +45,10 @@ const AppRoutes = [
     {
         path: '/SignatureVerification',
         element: <SignatureVerification />
+    },
+    {
+        path: '*',
+        element: <Navigate to="/" />
     }
 ];
 
