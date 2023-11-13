@@ -13,6 +13,7 @@ const KeyGeneration = () => {
     const decoded = jwtDecode(token);
     const userId = decoded.UserId; 
 
+    //Sprawdzenie czy klucz publiczny istenieje już w bazie
     const checkExistingKey = async () => {
         try {
             const url = ConnectionUrl.connectionUrlString + 'api/Crypto/check-key-exists';
@@ -28,6 +29,7 @@ const KeyGeneration = () => {
         }
     };
 
+    //Usunięcie instejącego klucza z bazy danych
     const deleteExistingKey = async () => {
         const url = `${ConnectionUrl.connectionUrlString}api/Crypto/delete-key`;
         try {
@@ -38,51 +40,78 @@ const KeyGeneration = () => {
         }
     };
 
-    const handleGenerateKeys = async () => {
-        try {
-            console.log('handleGenerateKeys called');
-            const keyExists = await checkExistingKey();
-            console.log('Key exists:', keyExists);
-            if (keyExists) {
-                const userConfirmation = window.confirm('Posiadasz już parę kluczy. Czy chcesz wygenerować nową parę kluczy?');
-                if (!userConfirmation) return;
+    //Funkcja do pobierania klucza prywatnego
+    const downloadBlob = (data, fileName, mimeType) => {
+        const blob = new Blob([data], { type: mimeType });
+        const url = window.URL.createObjectURL(blob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.setAttribute('download', fileName);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        window.URL.revokeObjectURL(url);
+    };
     
-                await deleteExistingKey();
-                alert('Usuń klucz prywatny z komputera.');
+    //Funkcja do generowania par kluczy
+    const generateKeys = async () => {
+        const keyExists = await checkExistingKey();
+        if (keyExists) {
+            // Jeśli klucz istnieje, zapytaj użytkownika, czy chce wygenerować nowy
+            const userConfirmation = window.confirm('Posiadasz już parę kluczy. Czy chcesz wygenerować nową parę kluczy?');
+            if (!userConfirmation) {
+                return;
             }
-            const url = ConnectionUrl.connectionUrlString + 'api/Crypto/generate-keys';
-            const response = await axios.post(url, { Id: userId });
-    
-            if (response.data) {
-                const privateKey = response.data.privateKey;
-                const blob = new Blob([privateKey], { type: 'application/octet-stream' });
-                const downloadUrl = window.URL.createObjectURL(blob);
-    
-                // Tworzenie tymczasowego linku do pobrania pliku
-                const link = document.createElement('a');
-                link.href = downloadUrl;
-                link.setAttribute('download', 'privateKey.xml'); // Ustaw nazwę pliku
-                document.body.appendChild(link);
-                link.click();
-    
-                // Oczyszczenie pamięci po pobraniu pliku
-                window.URL.revokeObjectURL(downloadUrl);
-                document.body.removeChild(link); // Usuń link z DOM po użyciu
-    
-                successNotify('Pomyślnie wygenerowano klucze');
-            } else {
-                throw new Error('Serwer nie zwrócił klucza prywatnego.');
-            }
-        } catch (err) {
-            console.error("Błąd podczas generowania kluczy:", err);
-            errorNotify('Błąd podczas generowania kluczy: ', err.message);
+            await deleteExistingKey();
         }
+    
+       //Proces generowania kluczy
+        const { publicKey, privateKey } = await window.crypto.subtle.generateKey(
+            {
+                name: "RSA-OAEP",
+                modulusLength: 2048,
+                publicExponent: new Uint8Array([1, 0, 1]),
+                hash: "SHA-256",
+            },
+            true, // Klucz może być eksportowany
+            ["encrypt", "decrypt"]
+        );
+    
+        // Eksportowanie klucza publicznego
+        const exportedPublicKey = await window.crypto.subtle.exportKey("spki", publicKey);
+        const publicKeyString = arrayBufferToBase64(exportedPublicKey);
+    
+        // Przesyłanie klucza publicznego na serwer
+        const url = ConnectionUrl.connectionUrlString + 'api/Crypto/upload-public-key';
+        try {
+            await axios.post(url, { UserId: userId, PublicKey: publicKeyString });
+            successNotify('Pomyślnie wygenerowano klucze');
+        } catch (error) {
+            errorNotify('Błąd podczas przesyłania klucza publicznego: ' + error.message);
+            return; 
+        }
+    
+        // Eksportuj klucz prywatny i zainicjuj jego pobieranie
+        const exportedPrivateKey = await window.crypto.subtle.exportKey("pkcs8", privateKey);
+        const privateKeyString = arrayBufferToBase64(exportedPrivateKey);
+        downloadBlob(privateKeyString, 'privateKey.pem', 'application/x-pem-file');
+    };
+    
+    // Funkcja pomocnicza do konwersji ArrayBuffer na ciąg Base64
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
     };
 
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="text-center">
-                <button onClick={handleGenerateKeys} className="btn btn-primary text-xl px-10 py-4">
+                <button onClick={generateKeys} className="btn btn-primary text-xl px-10 py-4">
                     Wygeneruj Parę Kluczy
                 </button>
                 {error && <p className="text-red-500 mt-4">{error}</p>}
