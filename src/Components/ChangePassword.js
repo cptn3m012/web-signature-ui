@@ -15,10 +15,6 @@ const ChangePassword = () => {
     const decoded = jwtDecode(token);
     const UserId = decoded.UserId;
 
-    const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
     const handleSubmit = e => {
         e.preventDefault();
 

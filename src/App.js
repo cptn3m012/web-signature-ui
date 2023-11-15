@@ -5,7 +5,6 @@ import {Layout} from "./Components/Layout";
 import './App.css';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {errorNotify} from "./ToastNotifications"; // Nie zapomnij importować stylów CSS dla ToastContainer
 
 function App() {
     const isAuthenticated = localStorage.getItem('token') !== null;

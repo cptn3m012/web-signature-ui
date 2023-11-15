@@ -28,7 +28,7 @@ const Edit = () => {
             .catch(error => {
                 setMessage('Wystąpił błąd podczas ładowania danych użytkownika');
             });
-    }, []);
+    }, );
 
     const handleSubmit = e => {
         e.preventDefault();

@@ -56,7 +56,7 @@ const Home = () => {
                     <div className="relative mx-auto bg-gray-500 dark:bg-gray-800 rounded-b-xl h-[55px] max-w-[83px] md:h-[95px] md:max-w-[142px]"></div>
                 </div>
 
-                <img srcSet={RSA} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="image description"/>
+                <img srcSet={RSA} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="description"/>
 
                 <div className=" mx-auto max-w-screen-xl text-center py-24 scroll-reveal">
                     <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">Generowanie Kluczy Kryptograficznych</h3>
@@ -128,9 +128,9 @@ const Home = () => {
                     </ol>
                 </div>
 
-                <img srcSet={AES} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="image description"/>
+                <img srcSet={AES} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="description"/>
 
-                <img srcSet={Signature} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="image description"/>
+                <img srcSet={Signature} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="description"/>
 
                 <div className=" mx-auto max-w-screen-xl text-center py-24 scroll-reveal">
                     <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">Tworzenie Podpisu Cyfrowego</h3>
@@ -202,7 +202,7 @@ const Home = () => {
                     </ol>
                 </div>
 
-                <img srcSet={Verify} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="image description"/>
+                <img srcSet={Verify} className="w-auto h-auto max-w-full max-h-full object-cover rounded-lg scroll-reveal" alt="description"/>
 
             </div>
         </div>

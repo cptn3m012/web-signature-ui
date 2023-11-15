@@ -39,9 +39,9 @@ const KeyGeneration = () => {
             errorNotify('Błąd podczas usuwania klucza');
         }
     };
-
-    //Funkcja do pobierania klucza prywatnego
+//Funkcja do pobierania klucza prywatnego
     const downloadBlob = (data, fileName, mimeType) => {
+        // Dodaj nagłówek i stopkę do klucza prywatnego
         const blob = new Blob([data], { type: mimeType });
         const url = window.URL.createObjectURL(blob);
         const downloadLink = document.createElement('a');
@@ -52,20 +52,17 @@ const KeyGeneration = () => {
         document.body.removeChild(downloadLink);
         window.URL.revokeObjectURL(url);
     };
-    
-    //Funkcja do generowania par kluczy
+
     const generateKeys = async () => {
         const keyExists = await checkExistingKey();
         if (keyExists) {
-            // Jeśli klucz istnieje, zapytaj użytkownika, czy chce wygenerować nowy
             const userConfirmation = window.confirm('Posiadasz już parę kluczy. Czy chcesz wygenerować nową parę kluczy?');
             if (!userConfirmation) {
                 return;
             }
             await deleteExistingKey();
         }
-    
-       //Proces generowania kluczy
+
         const { publicKey, privateKey } = await window.crypto.subtle.generateKey(
             {
                 name: "RSA-OAEP",
@@ -76,36 +73,23 @@ const KeyGeneration = () => {
             true, // Klucz może być eksportowany
             ["encrypt", "decrypt"]
         );
-    
-        // Eksportowanie klucza publicznego
-        const exportedPublicKey = await window.crypto.subtle.exportKey("spki", publicKey);
-        const publicKeyString = arrayBufferToBase64(exportedPublicKey);
-    
-        // Przesyłanie klucza publicznego na serwer
+
+        // Eksportuj klucz publiczny w formacie JWK
+        const exportedPublicKey = await window.crypto.subtle.exportKey("jwk", publicKey);
+        const publicKeyString = JSON.stringify(exportedPublicKey);
+
         const url = ConnectionUrl.connectionUrlString + 'api/Crypto/upload-public-key';
         try {
             await axios.post(url, { UserId: userId, PublicKey: publicKeyString });
             successNotify('Pomyślnie wygenerowano klucze');
         } catch (error) {
             errorNotify('Błąd podczas przesyłania klucza publicznego: ' + error.message);
-            return; 
+            return;
         }
-    
-        // Eksportuj klucz prywatny i zainicjuj jego pobieranie
-        const exportedPrivateKey = await window.crypto.subtle.exportKey("pkcs8", privateKey);
-        const privateKeyString = arrayBufferToBase64(exportedPrivateKey);
-        downloadBlob(privateKeyString, 'privateKey.pem', 'application/x-pem-file');
-    };
-    
-    // Funkcja pomocnicza do konwersji ArrayBuffer na ciąg Base64
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
+
+        const exportedPrivateKey = await window.crypto.subtle.exportKey("jwk", privateKey);
+        const privateKeyString = JSON.stringify(exportedPrivateKey);
+        downloadBlob(privateKeyString, 'privateKey.jwk', 'application/json');
     };
 
     return (
