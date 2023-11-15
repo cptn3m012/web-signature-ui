@@ -34,7 +34,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center dark:bg-transparent mt-20">
+        <div className="flex items-center justify-center dark:bg-transparent py-20">
             <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8  bg-gray-200 dark:bg-gray-700 dark:border-gray-700">
                 <form className="space-y-6" onSubmit={handleLogin}>
                     <h5 className="flex items-center justify-center text-xl font-medium text-gray-900 dark:text-white">Logowanie</h5>
