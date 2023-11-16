@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
@@ -12,6 +12,8 @@ const NavMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // nowy stan dla rozwijanego menu
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+    const dropdownRef = useRef(null); 
+    const buttonRef = useRef(null);
 
     useEffect(() => {
         const successNotificationContent = localStorage.getItem('successNotifyStorage');
@@ -49,12 +51,41 @@ const NavMenu = () => {
         window.location.reload(true);
     };
 
-    const toggleDropdown = (event) => {
-        let target = event.target;
+    const useOutsideClick = (menuRef, buttonRef, callback) => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target) &&
+                buttonRef.current && !buttonRef.current.contains(event.target)) {
+                callback();
+            }
+        };
+    
+        useEffect(() => {
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        });
+    };
 
+    
+    useOutsideClick(dropdownRef, () => {
+        if (isDropdownOpen) setIsDropdownOpen(false);
+    });
+
+    const closeDropdown = (event) => {
+        event.stopPropagation(); 
+        setIsDropdownOpen(false);
+    };
+
+    const toggleDropdown = (event) => {
+        event.stopPropagation(); // Zatrzymuje propagację zdarzenia
+    
+        let target = event.target;
+    
         if (target.tagName.toLowerCase() === 'svg') {
             target = target.parentElement;
         }
+    
         const rect = target.getBoundingClientRect();
         setIsDropdownOpen(!isDropdownOpen);
         setDropdownPosition({ top: rect.top + rect.height, left: rect.left + rect.width / 2 });
@@ -93,6 +124,7 @@ const NavMenu = () => {
                                             data-dropdown-toggle="dropdownNavbar"
                                             className="flex justify-center items-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent"
                                             onClick={toggleDropdown}
+                                            ref={buttonRef}
                                             style={{ width: '100%' }}
                                         >
                                             <span className="mr-2">Opcje</span>
@@ -107,33 +139,37 @@ const NavMenu = () => {
                                             )}
                                         </button>
                                         {isDropdownOpen && ReactDOM.createPortal(
-                                            <div id="dropdownNavbar" style={{ position: 'fixed', top: dropdownPosition.top, left: dropdownPosition.left }} className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700">
-                                                <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
-                                                    <li>
+                                        <div ref={dropdownRef} id="dropdownNavbar" style={{ position: 'fixed', top: dropdownPosition.top, left: dropdownPosition.left }} className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700">
+                                            <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
+                                                <li>
                                                     <NavLink
                                                         to="/KeyGeneration"
-                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white">
+                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
+                                                        onClick={closeDropdown}>
                                                         Generowanie kluczy
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink
                                                         to="/DataEncryption"
-                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white">
+                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
+                                                        onClick={closeDropdown}>
                                                         Szyfrowanie danych
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink
                                                         to="/CreatingSignature"
-                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white">
+                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
+                                                        onClick={closeDropdown}>
                                                         Tworzenie podpisu
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink
                                                         to="/SignatureVerification"
-                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white">
+                                                        className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
+                                                        onClick={closeDropdown}>
                                                         Weryfikacja podpisu
                                                     </NavLink>
                                                 </li>

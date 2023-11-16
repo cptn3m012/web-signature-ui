@@ -47,7 +47,7 @@ const Edit = () => {
     };
 
     return (
-        <div className="flex items-center justify-center mt-20">
+        <div className="flex items-center justify-center py-20">
             <div
                 className="w-full max-w-2xl p-6 border border-gray-200 rounded-lg shadow md:p-8 bg-gray-200 dark:bg-gray-700 dark:border-gray-700">
                 <form className="space-y-6" onSubmit={handleSubmit} >

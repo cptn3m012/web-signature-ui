@@ -78,9 +78,6 @@ const Login = () => {
                                 Zapamiętaj mnie
                             </label>
                         </div>
-                        <span className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
-                            Nie pamiętasz hasła?
-                        </span>
                     </div>
                     <button
                         type="submit"
