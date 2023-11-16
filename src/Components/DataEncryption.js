@@ -233,15 +233,15 @@ const DataEncryption = () => {
                                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Pobierz
                                     swój klucz publiczny
                                 </button>
-                                , do którego chcesz później wysłać bezpiecznie plik.
+                                , do którego chcesz później wysłać bezpiecznie plik
                             </li>
                             <li>
                                 W naszym serwerze plik zostanie zabezpieczony algorytmem AES, którego klucz zostanie
-                                dodatkowo zaszyfrowany przy pomocy publicznego klucza.
+                                dodatkowo zaszyfrowany przy pomocy publicznego klucza
                             </li>
                             <li>
                                 Zapisz swój zaszyfrowany plik oraz klucz AES, który będzie potrzebny użytkownikowi do
-                                jego odszyfrowania.
+                                jego odszyfrowania
                             </li>
                         </ul>
                     </form>
@@ -289,11 +289,11 @@ const DataEncryption = () => {
                             pliku:</h2>
                         <ul className=" space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                             <li>
-                                Wyślij swój plik PDF, który otrzymałeś wraz z kluczem AES.
+                                Wyślij swój plik PDF, który otrzymałeś wraz z kluczem AES
                             </li>
                             <li>
                                 Użyj swojego klucza prywatnego w pełni bezpieczny sposób, który odszyfruje klucz AES po
-                                stronie użytkownika.
+                                stronie użytkownika
                             </li>
                         </ul>
                     </form>

@@ -118,13 +118,16 @@ const KeyGeneration = () => {
                 <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Wygeneruj klucze RSA</h2>
                 <ul className="space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                     <li>
-                        Generowanie kluczy RSA (Rivest-Shamir-Adleman) jest podstawowym krokiem w tworzeniu bezpiecznego połączenia między dwoma stronami.
+                        Generowanie kluczy RSA (Rivest-Shamir-Adleman) jest podstawowym krokiem w tworzeniu bezpiecznego połączenia między dwoma stronami
                     </li>
                     <li>
-                        Klucz publiczny jest używany do szyfrowania danych, które mogą być następnie odszyfrowane tylko za pomocą odpowiadającego mu klucza prywatnego.
+                        Klucz publiczny jest używany do szyfrowania danych, które mogą być następnie odszyfrowane tylko za pomocą odpowiadającego mu klucza prywatnego
                     </li>
                     <li>
-                        Należy pamiętać, aby chronić swój klucz prywatny i nigdy go nie udostępniać. Jest on równoznaczny z Twoim cyfrowym podpisem.
+                        Klucz prywatny jest używany do tworzenia cyfrowego podpisu dokumentu, którego autentyczność można sprawdzić za pomocą klucza publicznego
+                    </li>
+                    <li>
+                        Należy pamiętać, aby chronić swój klucz prywatny i nigdy go nie udostępniać. Jest on równoznaczny z Twoim cyfrowym podpisem
                     </li>
                 </ul>
             </div>
