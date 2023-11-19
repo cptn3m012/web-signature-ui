@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
-import connectionUrl from "../ConnectionUrl";
-import {errorNotify, successNotify} from "../ToastNotifications";
-import ConnectionUrl from "../ConnectionUrl";
+import connectionUrl from "../Utils/ConnectionUrl";
+import {errorNotify, successNotify} from "../Utils/ToastNotifications";
+import ConnectionUrl from "../Utils/ConnectionUrl";
 
-const DataEncryption = () => {
+const DataEncryptionPage = () => {
     // Dekodowanie tokenu
     const token = localStorage.getItem('token');
     const decoded = jwtDecode(token);
@@ -303,4 +303,4 @@ const DataEncryption = () => {
     );
 }
 
-export default DataEncryption;
+export default DataEncryptionPage;

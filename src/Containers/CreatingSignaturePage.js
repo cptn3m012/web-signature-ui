@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import {  errorNotify } from '../ToastNotifications';
+import {  errorNotify } from '../Utils/ToastNotifications';
 
-const CreatingSignature = () => {
+const CreatingSignaturePage = () => {
     const [file, setFile] = useState(null);
     const [privateKey, setPrivateKey] = useState(null);
     const [isFileLoaded, setIsFileLoaded] = useState(false);
@@ -134,4 +134,4 @@ const CreatingSignature = () => {
     );
 }
 
-export default CreatingSignature;
+export default CreatingSignaturePage;

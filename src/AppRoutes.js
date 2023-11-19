@@ -1,50 +1,50 @@
 import { Navigate } from "react-router-dom";
-import Home from "./Components/Home";
-import Login from "./Components/Login";
-import Registration from "./Components/Registration";
-import Edit from "./Components/Edit";
-import ChangePassword from "./Components/ChangePassword";
-import KeyGeneration from "./Components/KeyGeneration";
-import DataEncryption from "./Components/DataEncryption";
-import CreatingSignature from "./Components/CreatingSignature";
-import SignatureVerification from "./Components/SignatureVerification";
+import HomePage from "./Containers/HomePage";
+import LoginPage from "./Containers/LoginPage";
+import RegistrationPage from "./Containers/RegistrationPage";
+import EditUserDataPage from "./Containers/EditUserDataPage";
+import ChangePasswordPage from "./Containers/ChangePasswordPage";
+import KeyGenerationPage from "./Containers/KeyGenerationPage";
+import DataEncryptionPage from "./Containers/DataEncryptionPage";
+import CreatingSignaturePage from "./Containers/CreatingSignaturePage";
+import SignatureVerificationPage from "./Containers/SignatureVerificationPage";
 
 const AppRoutes = [
     {
         path: '/',
-        element: <Home />
+        element: <HomePage />
     },
     {
         path: '/login',
-        element: <Login />
+        element: <LoginPage />
     },
     {
         path: '/registration',
-        element: <Registration />
+        element: <RegistrationPage />
     },
     {
         path: '/edit',
-        element: <Edit />
+        element: <EditUserDataPage />
     },
     {
         path: '/changePassword',
-        element: <ChangePassword />
+        element: <ChangePasswordPage />
     },
     {
-        path: '/KeyGeneration',
-        element: <KeyGeneration />
+        path: '/KeyGenerationPage',
+        element: <KeyGenerationPage />
     },
     {
-        path: '/DataEncryption',
-        element: <DataEncryption />
+        path: '/DataEncryptionPage',
+        element: <DataEncryptionPage />
     },
     {
-        path: '/CreatingSignature',
-        element: <CreatingSignature />
+        path: '/CreatingSignaturePage',
+        element: <CreatingSignaturePage />
     },
     {
-        path: '/SignatureVerification',
-        element: <SignatureVerification />
+        path: '/SignatureVerificationPage',
+        element: <SignatureVerificationPage />
     },
     {
         path: '*',

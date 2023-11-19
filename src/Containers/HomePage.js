@@ -1,14 +1,14 @@
-import './Home.css';
+import '../Components/ComponentsStyles/Home.css';
 import {NavLink} from 'react-router-dom';
-import myImage from "../graphics/home_page_graphics.png";
-import RSA from "../graphics/RSA.jpg"
-import AES from "../graphics/AES.jpg";
-import Signature from "../graphics/Signature.jpg"
-import Verify from "../graphics/Verify.jpg";
+import myImage from "../Assets/Images/home_page_graphics.png";
+import RSA from "../Assets/Images/RSA.jpg"
+import AES from "../Assets/Images/AES.jpg";
+import Signature from "../Assets/Images/Signature.jpg"
+import Verify from "../Assets/Images/Verify.jpg";
 import ScrollReveal from 'scrollreveal'
 import {useEffect, useState} from "react";
 
-const Home = () => {
+const HomePage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -217,4 +217,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default HomePage;

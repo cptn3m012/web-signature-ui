@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-import ConnectionUrl from "../ConnectionUrl";
-import {successNotify} from "../ToastNotifications";
+import ConnectionUrl from "../Utils/ConnectionUrl";
+import {successNotify} from "../Utils/ToastNotifications";
 
-const Edit = () => {
+const EditUserDataPage = () => {
     const [message, setMessage] = useState('');
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
@@ -105,4 +105,4 @@ const Edit = () => {
     );
 }
 
-export default Edit;
+export default EditUserDataPage;

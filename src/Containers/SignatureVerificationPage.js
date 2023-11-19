@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import {errorNotify, successNotify} from "../ToastNotifications";
+import {errorNotify, successNotify} from "../Utils/ToastNotifications";
 
-const SignatureVerification = () => {
+const SignatureVerificationPage = () => {
     const [file, setFile] = useState(null);
     const [signature, setSignature] = useState(null);
     const [publicKey, setPublicKey] = useState(null);
@@ -132,4 +132,4 @@ const SignatureVerification = () => {
     );
 }
 
-export default SignatureVerification;
+export default SignatureVerificationPage;

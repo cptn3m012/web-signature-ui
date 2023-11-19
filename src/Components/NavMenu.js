@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 import axios from 'axios';
-import './NavMenu.css'
-import ConnectionUrl from "../ConnectionUrl";
-import {errorNotifyStorage, successNotifyStorage} from "../ToastNotifications";
-import myImage from "../graphics/SignificantSignatureLogo.png";
+import './ComponentsStyles/NavMenu.css'
+import ConnectionUrl from "../Utils/ConnectionUrl";
+import {errorNotifyStorage, successNotifyStorage} from "../Utils/ToastNotifications";
+import myImage from "../Assets/Images/SignificantSignatureLogo.png";
 
 const NavMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -143,7 +143,7 @@ const NavMenu = () => {
                                             <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
                                                 <li>
                                                     <NavLink
-                                                        to="/KeyGeneration"
+                                                        to="/KeyGenerationPage"
                                                         className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
                                                         onClick={closeDropdown}>
                                                         Generowanie kluczy
@@ -151,7 +151,7 @@ const NavMenu = () => {
                                                 </li>
                                                 <li>
                                                     <NavLink
-                                                        to="/DataEncryption"
+                                                        to="/DataEncryptionPage"
                                                         className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
                                                         onClick={closeDropdown}>
                                                         Szyfrowanie danych
@@ -159,7 +159,7 @@ const NavMenu = () => {
                                                 </li>
                                                 <li>
                                                     <NavLink
-                                                        to="/CreatingSignature"
+                                                        to="/CreatingSignaturePage"
                                                         className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
                                                         onClick={closeDropdown}>
                                                         Tworzenie podpisu
@@ -167,7 +167,7 @@ const NavMenu = () => {
                                                 </li>
                                                 <li>
                                                     <NavLink
-                                                        to="/SignatureVerification"
+                                                        to="/SignatureVerificationPage"
                                                         className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-500 dark:hover:text-white"
                                                         onClick={closeDropdown}>
                                                         Weryfikacja podpisu
@@ -180,7 +180,7 @@ const NavMenu = () => {
                                     <li>
                                         <NavLink
                                             className="flex justify-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent nav-link active"
-                                            to="/Edit"
+                                            to="/EditUserDataPage"
                                         >
                                             Moje dane
                                         </NavLink>
@@ -188,7 +188,7 @@ const NavMenu = () => {
                                     <li>
                                         <NavLink
                                             className="flex justify-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent nav-link active"
-                                            to="/ChangePassword"
+                                            to="/ChangePasswordPage"
                                         >
                                             Zmiana hasła
                                         </NavLink>

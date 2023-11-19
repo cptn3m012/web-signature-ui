@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ConnectionUrl from "../ConnectionUrl";
+import ConnectionUrl from "../Utils/ConnectionUrl";
 import axios from "axios";
 
-const Login = () => {
+const LoginPage = () => {
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -87,7 +87,7 @@ const Login = () => {
                     </button>
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                         Nie posiadasz konta?{' '}
-                        <a href="/Registration" className="text-blue-700 hover:underline dark:text-blue-500">
+                        <a href="/src/Containers/RegistrationPage" className="text-blue-700 hover:underline dark:text-blue-500">
                             Zarejestruj sie!
                         </a>
                     </div>
@@ -102,4 +102,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default LoginPage;

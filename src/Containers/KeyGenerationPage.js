@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Poprawny import
-import ConnectionUrl from "../ConnectionUrl";
-import { errorNotify } from '../ToastNotifications';
-import {successNotify} from "../ToastNotifications";
-import ConfirmModal from "./ConfirmModal";
+import ConnectionUrl from "../Utils/ConnectionUrl";
+import { errorNotify } from '../Utils/ToastNotifications';
+import {successNotify} from "../Utils/ToastNotifications";
+import ConfirmModal from "../Components/ConfirmModal";
 
-const KeyGeneration = () => {
+const KeyGenerationPage = () => {
     const token = localStorage.getItem('token');
     const decoded = jwtDecode(token);
     const userId = decoded.UserId;
@@ -142,4 +142,4 @@ const KeyGeneration = () => {
 };
 
 
-export default KeyGeneration;
+export default KeyGenerationPage;

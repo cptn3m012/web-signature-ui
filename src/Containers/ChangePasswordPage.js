@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-import ConnectionUrl from "../ConnectionUrl";
-import {successNotify} from "../ToastNotifications";
+import ConnectionUrl from "../Utils/ConnectionUrl";
+import {successNotify} from "../Utils/ToastNotifications";
 
-const ChangePassword = () => {
+const ChangePasswordPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -131,4 +131,4 @@ const ChangePassword = () => {
     );
 }
 
-export default ChangePassword;
+export default ChangePasswordPage;

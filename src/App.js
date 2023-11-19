@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import {Layout} from "./Components/Layout";
-import './App.css';
+import './Assets/Styles/App.css';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,8 +34,8 @@ function App() {
                     }
 
                     //Jeśli użytkownik nie jest zalogowany i próbuje uzyskać dostęp do '/edit', przekieruj go na stronę główną
-                    if ((path === '/edit' || path === '/changePassword' ||  path === '/KeyGeneration'
-                        || path === '/DataEncryption' || path === '/CreatingSignature' || path ==='/SignatureVerification') 
+                    if ((path === '/edit' || path === '/changePassword' ||  path === '/KeyGenerationPage'
+                        || path === '/DataEncryptionPage' || path === '/CreatingSignaturePage' || path ==='/SignatureVerificationPage')
                         && !isAuthenticated) {
                         return <Route key={index} path={path} element={<Navigate to="/" />} />;
                     }
