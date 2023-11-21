@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import ConnectionUrl from "../Utils/ConnectionUrl";
 import axios from "axios";
 
@@ -87,9 +87,9 @@ const LoginPage = () => {
                     </button>
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                         Nie posiadasz konta?{' '}
-                        <a href="/src/Containers/RegistrationPage" className="text-blue-700 hover:underline dark:text-blue-500">
+                        <NavLink to="/registration" className="text-blue-700 hover:underline dark:text-blue-500">
                             Zarejestruj sie!
-                        </a>
+                        </NavLink>
                     </div>
                     {message && (
                         <div className="text-red-500 my-2 text-center">
