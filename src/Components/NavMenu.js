@@ -180,7 +180,7 @@ const NavMenu = () => {
                                     <li>
                                         <NavLink
                                             className="flex justify-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent nav-link active"
-                                            to="/EditUserDataPage"
+                                            to="/edit"
                                         >
                                             Moje dane
                                         </NavLink>
@@ -188,7 +188,7 @@ const NavMenu = () => {
                                     <li>
                                         <NavLink
                                             className="flex justify-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent nav-link active"
-                                            to="/ChangePasswordPage"
+                                            to="/changePassword"
                                         >
                                             Zmiana hasła
                                         </NavLink>
