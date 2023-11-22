@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 import axios from 'axios';
@@ -11,9 +10,8 @@ import myImage from "../Assets/Images/SignificantSignatureLogo.png";
 const NavMenu = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // nowy stan dla rozwijanego menu
-    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
-    const dropdownRef = useRef(null); 
-    const buttonRef = useRef(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const successNotificationContent = localStorage.getItem('successNotifyStorage');
@@ -77,19 +75,18 @@ const NavMenu = () => {
         setIsDropdownOpen(false);
     };
 
-    const toggleDropdown = (event) => {
-        event.stopPropagation(); // Zatrzymuje propagację zdarzenia
-    
-        let target = event.target;
-    
-        if (target.tagName.toLowerCase() === 'svg') {
-            target = target.parentElement;
-        }
-    
-        const rect = target.getBoundingClientRect();
-        setIsDropdownOpen(!isDropdownOpen);
-        setDropdownPosition({ top: rect.top + rect.height, left: rect.left + rect.width / 2 });
-    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
     return (
         <>
@@ -115,31 +112,35 @@ const NavMenu = () => {
                                     Home
                                 </NavLink>
                             </li>
-
                             {isLoggedIn ? (
                                 <React.Fragment>
                                     <li className="flex justify-center">
                                         <button
+                                            ref={dropdownRef}
                                             id="dropdownNavbarLink"
                                             data-dropdown-toggle="dropdownNavbar"
                                             className="flex justify-center items-center text-lg py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 active:bg-gray-100  md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-600 dark:hover:text-white md:dark:hover:bg-transparent"
-                                            onClick={toggleDropdown}
-                                            ref={buttonRef}
-                                            style={{ width: '100%' }}
+                                            onClick={() => setIsOpen(!isOpen)}
                                         >
-                                            <span className="mr-2">Opcje</span>
-                                            {isDropdownOpen ? (
-                                                <svg className="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 5 4 -4 4 4"/>
-                                                </svg>
-                                            ) : (
-                                                <svg className="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                                </svg>
-                                            )}
+                                            Opcje
+                                            <svg
+                                                className="w-2.5 h-2.5 ms-2.5 transform transition-transform duration-200"
+                                                style={{ transform: `rotate(${isOpen ? "180deg" : "0deg"})` }}
+                                                aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 10 6"
+                                            >
+                                                <path
+                                                    stroke="currentColor"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="m1 1 4 4 4-4"
+                                                />
+                                            </svg>
                                         </button>
-                                        {isDropdownOpen && ReactDOM.createPortal(
-                                        <div ref={dropdownRef} id="dropdownNavbar" style={{ position: 'fixed', top: dropdownPosition.top, left: dropdownPosition.left }} className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700">
+                                            <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700">
                                             <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
                                                 <li>
                                                     <NavLink
@@ -174,8 +175,7 @@ const NavMenu = () => {
                                                     </NavLink>
                                                 </li>
                                             </ul>
-                                            </div>,
-                                            document.body )}
+                                            </div>
                                     </li>
                                     <li>
                                         <NavLink
