@@ -83,6 +83,8 @@ const NavMenu = () => {
         };
 
         document.addEventListener("click", handleClickOutside);
+        setIsDropdownOpen(false);
+        setIsOpen(false);
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
@@ -140,8 +142,9 @@ const NavMenu = () => {
                                                 />
                                             </svg>
                                         </button>
+                                        {isOpen ?
                                             <div id="dropdownNavbar" className="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700">
-                                            <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
+                                                <ul className="py-2 text-sd text-gray-700 dark:bg-gray-600 hover:bg-gray-100 md:hover:bg-transparent md:border-0  md:p-0 dark:text-white dark:hover:bg-gray-600" aria-labelledby="dropdownLargeButton">
                                                 <li>
                                                     <NavLink
                                                         to="/KeyGenerationPage"
@@ -175,7 +178,8 @@ const NavMenu = () => {
                                                     </NavLink>
                                                 </li>
                                             </ul>
-                                            </div>
+                                            </div> : null
+                                        }
                                     </li>
                                     <li>
                                         <NavLink

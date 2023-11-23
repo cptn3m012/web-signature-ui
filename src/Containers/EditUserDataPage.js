@@ -28,7 +28,7 @@ const EditUserDataPage = () => {
             .catch(error => {
                 setMessage('Wystąpił błąd podczas ładowania danych użytkownika');
             });
-    }, );
+    }, [UserId]);
 
     const handleSubmit = e => {
         e.preventDefault();
