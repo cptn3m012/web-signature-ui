@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import React, { useEffect, useState } from "react";
+
 import ConnectionUrl from "../Utils/ConnectionUrl";
-import {successNotify} from "../Utils/ToastNotifications";
+import { successNotify } from "../Utils/ToastNotifications";
 
 const EditUserDataPage = () => {
     const [message, setMessage] = useState('');
@@ -59,7 +60,7 @@ const EditUserDataPage = () => {
                         <input type="first_name" name="first_name" id="first_name" value={first_name}
                                onChange={e => setFirstName(e.target.value)}
                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                               placeholder="Grzesiek" required/>
+                               placeholder="Imie" required/>
                     </div>
                     <div>
                         <label htmlFor="last_name"
@@ -67,7 +68,7 @@ const EditUserDataPage = () => {
                         <input type="last_name" name="last_name" id="last_name" value={last_name}
                                onChange={e => setLastName(e.target.value)}
                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                               placeholder="Floryda" required/>
+                               placeholder="Nazwisko" required/>
                     </div>
                     <div>
                         <label htmlFor="email"
