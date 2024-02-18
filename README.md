@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+## Web signature page group project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal of the project is to create an application for generating and verifying digital signatures. The application will consist of three main components: a backend based on ASP.NET Core, a frontend built in React technology, and a SQL Server database. One of the key aspects of the project is to ensure a high level of security. For this purpose, the application will use technologies such as JSON Web Tokens (JWT) for user authentication, AES for encrypting sensitive data at the application level, and RSA for generating and verifying digital signatures. Additionally, the project assumes securing communication between the client and the server using HTTPS and ensuring secure storage and management of cryptographic keys. The main motivation behind this project is to provide users with a tool that will allow them to securely create and verify digital signatures, as well as effective and reliable data encryption.
 
-## Available Scripts
+## 📷 What it looks like: 
+### Home page of the program and Navbar options before logging in:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/6e05d197-acf4-40ec-acfd-1b0825fa689b)
 
-In the project directory, you can run:
+### Login panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/979a55c8-0e7e-4f6e-b225-fc1804980695)
 
-### `npm start`
+### Registration panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/403e5f84-c0ad-49f8-88d2-1fafb8cdc1d6)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+###  Navbar options after logging in:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/2fb4cc94-50f5-41bb-9439-1ff2115bec3a)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Data change panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/ea017a1a-9f14-45c6-ae5c-7085d89077f3)
 
-### `npm test`
+### Password change panel: 
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/1b3465d4-71be-4358-a755-67a02ec206d6)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Encryption key generation panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/e376c1d2-5a4e-49bb-b8a3-a6545069d702)
 
-### `npm run build`
+### AES algorithm encryption panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/310f380a-d7f4-44f8-8ea9-bd809e4d3345)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Panel for creating digital signatures:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/c792f893-93e3-439f-bbf8-b9cb5163860c)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Digital signature verification panel:
+![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/ab1bd853-ce01-43c9-87f1-7dace8c57b43)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
