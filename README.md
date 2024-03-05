@@ -1,6 +1,42 @@
-## Web signature page group project
+# Web Signature Frontend
 
+## Project Overview
 The goal of the project is to create an application for generating and verifying digital signatures. The application will consist of three main components: a backend based on ASP.NET Core, a frontend built in React technology, and a SQL Server database. One of the key aspects of the project is to ensure a high level of security. For this purpose, the application will use technologies such as JSON Web Tokens (JWT) for user authentication, AES for encrypting sensitive data at the application level, and RSA for generating and verifying digital signatures. Additionally, the project assumes securing communication between the client and the server using HTTPS and ensuring secure storage and management of cryptographic keys. The main motivation behind this project is to provide users with a tool that will allow them to securely create and verify digital signatures, as well as effective and reliable data encryption.
+
+## Clone and Install
+
+1. **Clone the repo:**
+```
+git clone https://github.com/cptn3m012/web-signature-ui.git
+```
+
+2. **Navigate to the project directory:**
+```
+cd web-signature-ui
+```
+
+3. **Install the dependencies:**
+
+Install the project dependencies using npm:
+```
+npm install
+```
+
+Alternatively, if you prefer using Yarn, you can run:
+```
+yarn install
+```
+  
+4. **Run the app:**
+Start the development server:
+```
+npm start
+```
+
+Or, if you're using Yarn:
+```
+yarn start
+```
 
 ## 📷 What it looks like: 
 ### Home page of the program and Navbar options before logging in:
@@ -33,3 +69,5 @@ The goal of the project is to create an application for generating and verifying
 ### Digital signature verification panel:
 ![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/ab1bd853-ce01-43c9-87f1-7dace8c57b43)
 
+## License
+This application is on MIT License.
