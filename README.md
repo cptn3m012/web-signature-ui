@@ -28,6 +28,7 @@ yarn install
 ```
   
 4. **Run the app:**
+
 Start the development server:
 ```
 npm start
