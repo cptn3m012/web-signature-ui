@@ -71,4 +71,4 @@ yarn start
 ![image](https://github.com/trimplexx/web-signature-web-api/assets/101646747/ab1bd853-ce01-43c9-87f1-7dace8c57b43)
 
 ## License
-This application is on MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
